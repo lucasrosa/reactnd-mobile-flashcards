@@ -6,6 +6,7 @@ import Decks from './components/Decks'
 import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 
 const DeckStack = createStackNavigator({
   Decks: {
@@ -24,6 +25,12 @@ const DeckStack = createStackNavigator({
     screen: AddCard,
     navigationOptions: {
       tabBarLabel: 'Add Card'
+    }
+   },
+   Quiz : {
+    screen: Quiz,
+    navigationOptions: {
+      tabBarLabel: 'Quiz'
     }
    }
 });
