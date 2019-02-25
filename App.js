@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator, createAppContainer, createStackNavigator
 import Decks from './components/Decks'
 import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
+import AddCard from './components/AddCard'
 
 const DeckStack = createStackNavigator({
   Decks: {
@@ -17,6 +18,12 @@ const DeckStack = createStackNavigator({
     screen: Deck,
     navigationOptions: {
       tabBarLabel: 'Deck'
+    }
+   },
+   AddCard : {
+    screen: AddCard,
+    navigationOptions: {
+      tabBarLabel: 'Add Card'
     }
    }
 });
