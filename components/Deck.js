@@ -1,0 +1,59 @@
+import React, { Component } from 'react'
+import { View, Text, StyleSheet, Button } from 'react-native'
+import { NavigationActions } from 'react-navigation';
+
+
+class Deck extends Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: navigation.getParam('title', 'Deck'),
+        };
+    };
+    render() {
+        const { navigation } = this.props;
+        const title = navigation.getParam('title', 'Deck');
+
+        return (
+            <View style={styles.item} >
+                <View>
+                    <Text style={styles.title}>{title}</Text>
+                    <Text style={styles.subtitle}>0 cards</Text>
+                </View> 
+                <View style={styles.buttonContainer}>
+                    <View style={styles.singleButtonContainer}>
+                        <Button style={styles.button} title='Add card'></Button>
+                    </View>
+                    <View style={styles.singleButtonContainer}>
+                        <Button style={styles.button} title='Start quiz'></Button>  
+                    </View>
+                </View>
+            </View>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    item: {
+        padding: 10,
+        alignItems: 'center',
+    },
+    title: {
+        paddingTop: 40,
+        fontSize: 36
+    },
+    subtitle: {
+        fontSize: 28,
+        color: 'gray'
+    },
+    buttonContainer: {
+        paddingTop: 200
+    },
+    singleButtonContainer: {
+        paddingTop: 20
+    }
+  })
+
+export default Deck
