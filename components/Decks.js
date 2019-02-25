@@ -9,6 +9,9 @@ class Decks extends Component {
     componentDidMount() {
         //console.log("asd", this.props.screenProps.decks);
     }
+    cocoBongo = () => {
+        console.log("coco bongo")
+    }
 
     render() {
         const { decks } = this.props.screenProps
@@ -29,11 +32,12 @@ class Decks extends Component {
                         style={styles.item} 
                         title={item.deck.title}
                         onPress={() => this.props.navigation.navigate('Deck', {
-                            title: item.deck.title
+                            deck: item.deck,
+                            handleAddDeck: this.props.screenProps.handleAddDeck
                         })}
                         >
                         <Text style={styles.title}>{item.deck.title}</Text>
-                        <Text style={styles.subtitle}>0 cards</Text>  
+                        <Text style={styles.subtitle}>{item.deck.questions.length} cards</Text>  
                         </TouchableOpacity>}
                     />
                 </View>

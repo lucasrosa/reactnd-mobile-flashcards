@@ -68,6 +68,18 @@ export default class App extends React.Component {
     })
   }
 
+  handleAddCard = (deckTitle, question, answer, callback) => {
+    console.log("adding question", deckTitle, question, answer)
+    let currentDecks = this.state.decks
+    currentDecks[deckTitle].questions.push({question, answer})
+    const entry = currentDecks[deckTitle]
+    
+    submitEntry({key: deckTitle, entry}).then(() => {
+        this.setState({ decks: currentDecks })
+        callback()
+    })
+  }
+
   componentDidMount() {
     createEntry(decks).then(() => {
       // submitEntry({key: "pokato", entry: "lambato"}).then(() => {
@@ -81,7 +93,13 @@ export default class App extends React.Component {
   }
   render() {
     return <AppContainer 
-      screenProps={{decks: this.state.decks, handleAddDeck: this.handleAddDeck}}
+      screenProps={
+        {
+          decks: this.state.decks, 
+          handleAddDeck: this.handleAddDeck,
+          handleAddCard: this.handleAddCard
+        }
+      }
       //handleAddDeck={this.handleAddDeck}
     />;
   }

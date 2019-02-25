@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation';
 class AddCard extends Component {
     state = {
         question: "Question",
-        answer: "Answer",
+        answer: "Answer"
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -14,6 +14,19 @@ class AddCard extends Component {
             title: "Add Card"
         };
     };
+    localHandleAddCard = () => {
+        const { question, answer } = this.state
+        const deck = this.props.navigation.getParam('deck', 'Deck')
+        
+        this.props.screenProps.handleAddCard(deck.title, question, answer, () => {
+            this.setState({
+                question: "Question",
+                answer: "Answer"                
+            })
+            this.props.navigation.goBack()
+        })
+    }
+
     render() {
         const { navigation } = this.props;
 
@@ -34,7 +47,7 @@ class AddCard extends Component {
                     />
                 </View>
                 <View style={styles.singleButtonContainer}>
-                    <Button style={styles.button} title='Submit'></Button>  
+                    <Button style={styles.button} onPress={this.localHandleAddCard} title='Submit'></Button>  
                 </View>
             </View>
         )

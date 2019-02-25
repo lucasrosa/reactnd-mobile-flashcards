@@ -10,21 +10,27 @@ class Deck extends Component {
         };
     };
     render() {
-        const { navigation } = this.props;
-        const title = navigation.getParam('title', 'Deck');
+        
+        const { navigation } = this.props
+        const deck = navigation.getParam('deck', 'Deck')
+        const title = deck.title
+        const cardsCount = deck.questions.length
 
         return (
             <View style={styles.item} >
                 <View>
                     <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.subtitle}>0 cards</Text>
+                    <Text style={styles.subtitle}>{cardsCount} cards</Text>
                 </View> 
                 <View style={styles.buttonContainer}>
                     <View style={styles.singleButtonContainer}>
                         <Button 
                             style={styles.button} 
                             title='Add card'
-                            onPress={() => this.props.navigation.navigate('AddCard')}
+                            onPress={() => this.props.navigation.navigate('AddCard', {
+                                deck,
+                                handleAddCard: this.props.screenProps.handleAddCard
+                            })}
                             >
                         </Button>
                     </View>
