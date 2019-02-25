@@ -34,16 +34,13 @@ const DeckStack = createStackNavigator({
     }
    }
 });
-handleAddDeck = () => {
-  console.log("oas")
-}
+
 const TabNavigator = createMaterialTopTabNavigator ({
   DeckStack,
   NewDeck: {
     screen: NewDeck, 
     navigationOptions: {
-      tabBarLabel: 'New Deck',
-        handleAddDeck
+      tabBarLabel: 'New Deck'
     }
   }
 },{
@@ -60,6 +57,17 @@ export default class App extends React.Component {
     
   }
 
+  handleAddDeck = (title, callback) => {
+    const entry = {questions:[], title}
+  
+    submitEntry({key: title, entry}).then(() => {
+        let currentDecks = this.state.decks
+        currentDecks[title] = entry
+        this.setState({ decks: currentDecks })
+        callback()
+    })
+  }
+
   componentDidMount() {
     createEntry(decks).then(() => {
       // submitEntry({key: "pokato", entry: "lambato"}).then(() => {
@@ -72,10 +80,10 @@ export default class App extends React.Component {
     })
   }
   render() {
-    return <AppContainer screenProps={{
-      decks: this.state.decks,
-      handleAddDeck
-    }} />;
+    return <AppContainer 
+      screenProps={{decks: this.state.decks, handleAddDeck: this.handleAddDeck}}
+      //handleAddDeck={this.handleAddDeck}
+    />;
   }
 }
 

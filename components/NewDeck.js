@@ -14,7 +14,12 @@ class NewDeck extends Component {
         };
     };
     handleNewDeck = () => {
-        this.props.navigation.handleAddDeck()
+        if (this.state.deckTitle !== "") {
+            this.props.screenProps.handleAddDeck(this.state.deckTitle,  () => { 
+                this.props.navigation.navigate('Decks') 
+                this.setState({ deckTitle : ""})
+            })
+        }
     }
 
     render() {
