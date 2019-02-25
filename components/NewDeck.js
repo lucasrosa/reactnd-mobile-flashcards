@@ -14,7 +14,7 @@ class NewDeck extends Component {
         };
     };
     handleNewDeck = () => {
-        console.log("potato")
+        this.props.navigation.handleAddDeck()
     }
 
     render() {

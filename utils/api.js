@@ -6,14 +6,17 @@ export function fetchDeckResults () {
     return AsyncStorage.getItem(DECK_STORAGE_KEY)
   }
 
+export function createEntry (decks) {
+  return AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(decks))
+}
 export function submitEntry ({ entry, key }) {
     return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
         [key]: entry,
-    }))
+    }), (err,result) => { console.log(err,result)})
 }
 
 
-const decks = {
+export const decks = {
     React: {
       title: 'React',
       questions: [

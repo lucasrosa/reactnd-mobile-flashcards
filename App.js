@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { getDecks, getDeck, saveDeckTitle, addCardToDeck } from './utils/api'
+import { createEntry, submitEntry, fetchDeckResults, decks, getDecks, getDeck, saveDeckTitle, addCardToDeck } from './utils/api'
 import { createMaterialTopTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 import Decks from './components/Decks'
 import Deck from './components/Deck'
@@ -34,13 +34,16 @@ const DeckStack = createStackNavigator({
     }
    }
 });
-
+handleAddDeck = () => {
+  console.log("oas")
+}
 const TabNavigator = createMaterialTopTabNavigator ({
   DeckStack,
   NewDeck: {
     screen: NewDeck, 
     navigationOptions: {
-      tabBarLabel: 'New Deck'
+      tabBarLabel: 'New Deck',
+        handleAddDeck
     }
   }
 },{
@@ -49,7 +52,32 @@ const TabNavigator = createMaterialTopTabNavigator ({
   }
 }) 
 
-export default createAppContainer(TabNavigator);
+
+const AppContainer = createAppContainer(TabNavigator)
+
+export default class App extends React.Component {
+  state = {
+    
+  }
+
+  componentDidMount() {
+    createEntry(decks).then(() => {
+      // submitEntry({key: "pokato", entry: "lambato"}).then(() => {
+      //   console.log("loida")
+        fetchDeckResults().then((data) => {
+          this.setState({decks: JSON.parse(data)})
+          //console.log("doida", data)
+        })
+      // })
+    })
+  }
+  render() {
+    return <AppContainer screenProps={{
+      decks: this.state.decks,
+      handleAddDeck
+    }} />;
+  }
+}
 
 
 const styles = StyleSheet.create({
