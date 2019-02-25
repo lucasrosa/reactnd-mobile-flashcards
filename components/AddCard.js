@@ -16,7 +16,6 @@ class AddCard extends Component {
     };
     render() {
         const { navigation } = this.props;
-        const title = navigation.getParam('title', 'Deck');
 
         return (
             <View style={styles.item} >

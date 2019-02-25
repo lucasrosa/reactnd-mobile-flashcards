@@ -29,7 +29,12 @@ class Deck extends Component {
                         </Button>
                     </View>
                     <View style={styles.singleButtonContainer}>
-                        <Button style={styles.button} title='Start quiz'></Button>  
+                        <Button 
+                            style={styles.button} 
+                            title='Start quiz'
+                            onPress={() => this.props.navigation.navigate('Quiz')}
+                            >
+                        </Button>  
                     </View>
                 </View>
             </View>
