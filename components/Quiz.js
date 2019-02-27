@@ -5,7 +5,8 @@ import { NavigationActions } from 'react-navigation';
 
 class Quiz extends Component {
     state = {
-        
+        currentQuestion: 0,
+        correctQuestions: 0
     }
 
     static navigationOptions = ({ navigation }) => {
