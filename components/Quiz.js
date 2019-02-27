@@ -5,8 +5,9 @@ import { NavigationActions } from 'react-navigation';
 
 class Quiz extends Component {
     state = {
-        currentQuestion: 0,
-        correctQuestions: 0
+        currentQuestionId: 0,
+        correctQuestions: 0,
+        deck: {}
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -14,25 +15,79 @@ class Quiz extends Component {
             title: "Quiz"
         };
     };
-    render() {
-        const { navigation } = this.props;
+    handleCorrectQuestion = () => {
+        const { correctQuestions, currentQuestionId } = this.state
+        this.setState({ 
+            correctQuestions: correctQuestions + 1,
+            currentQuestionId: currentQuestionId + 1
+        })
+    }
 
-        return (
-            <View>
-                <Text>2/2</Text>
+    handleIncorrectQuestion = () => {
+        const { currentQuestionId } = this.state
+        this.setState({ 
+            currentQuestionId: currentQuestionId + 1
+        })
+    }
+
+    componentDidMount() {
+        const deck = this.props.navigation.getParam('deck', 'Deck')
+        this.setState({deck})
+    }
+
+    render() {
+        const { currentQuestionId, deck } = this.state
+        
+        const totalNumberOfQuestions = deck.questions ? deck.questions.length : 0
+
+
+        if (!deck.questions || deck.questions.length === 0) {
+            return (
                 <View style={styles.item} >
-                    <View  style={styles.textView} >
-                        <Text>oi!</Text>
+                    <Text style={styles.currentQuestionCounterText}>This deck has no cards yet.</Text>
+                </View>
+            )
+        } else if (currentQuestionId === totalNumberOfQuestions) {
+            const { correctQuestions } = this.state 
+            return (
+                <View style={styles.item} >
+                    <Text style={styles.currentQuestionCounterText}>Finished! You got {correctQuestions} correct out of {totalNumberOfQuestions} questions!</Text>
+                </View>
+            )
+        } else {
+            const currentQuestion = deck.questions ? deck.questions[currentQuestionId].question : ""
+            
+            return (
+                <View>
+                    <View style={styles.currentQuestionCounter}>
+                        <Text style={styles.endText}>{currentQuestionId}/{totalNumberOfQuestions}</Text>
                     </View>
-                    <View style={styles.singleButtonContainer}>
-                        <Button style={styles.correctButton} color='green' title='Correct'></Button>  
-                    </View>
-                    <View style={styles.singleButtonContainer}>
-                        <Button style={styles.incorrectButton} color='red' title='Incorrect'></Button>  
+                    <View style={styles.item} >
+                        <View style={styles.textView} >
+                            <Text style={styles.text}>{currentQuestion}</Text>
+                        </View>
+                        <View style={styles.singleButtonContainer}>
+                            <Button 
+                                style={styles.correctButton} 
+                                color='green' 
+                                title='Correct'
+                                onPress={this.handleCorrectQuestion}
+                                >
+                            </Button>  
+                        </View>
+                        <View style={styles.singleButtonContainer}>
+                            <Button 
+                                style={styles.incorrectButton} 
+                                color='red' 
+                                title='Incorrect'
+                                onPress={this.handleIncorrectQuestion}
+                                >
+                            </Button>  
+                        </View>
                     </View>
                 </View>
-            </View>
-        )
+            )
+        }
     }
 }
 
@@ -41,11 +96,20 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     item: {
-        paddingTop: 200,
+        padding: 20,
+        paddingTop: 100,
         alignItems: 'center',
     },
     textView: {
         paddingTop: 20
+    },
+    endText: {
+        padding: 20,
+        fontSize: 30
+    },
+    text: {
+        padding: 20,
+        fontSize: 32
     },
     correctButton: {
         backgroundColor: 'green'
@@ -56,7 +120,14 @@ const styles = StyleSheet.create({
     singleButtonContainer: {
         paddingTop: 20,
         width:250
+    },
+    currentQuestionCounter : {
+        padding: 15
+    },
+    currentQuestionCounterText : {
+        fontSize: 20
     }
+
   })
 
 export default Quiz
