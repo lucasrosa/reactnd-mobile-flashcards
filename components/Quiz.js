@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, TouchableHighlight } from 'react-native'
 import { NavigationActions } from 'react-navigation';
 
 
@@ -7,6 +7,7 @@ class Quiz extends Component {
     state = {
         currentQuestionId: 0,
         correctQuestions: 0,
+        showAnswer: false,
         deck: {}
     }
 
@@ -19,14 +20,16 @@ class Quiz extends Component {
         const { correctQuestions, currentQuestionId } = this.state
         this.setState({ 
             correctQuestions: correctQuestions + 1,
-            currentQuestionId: currentQuestionId + 1
+            currentQuestionId: currentQuestionId + 1,
+            showAnswer: false
         })
     }
 
     handleIncorrectQuestion = () => {
         const { currentQuestionId } = this.state
         this.setState({ 
-            currentQuestionId: currentQuestionId + 1
+            currentQuestionId: currentQuestionId + 1,
+            showAnswer: false
         })
     }
 
@@ -36,7 +39,7 @@ class Quiz extends Component {
     }
 
     render() {
-        const { currentQuestionId, deck } = this.state
+        const { currentQuestionId, deck, showAnswer } = this.state
         
         const totalNumberOfQuestions = deck.questions ? deck.questions.length : 0
 
@@ -56,7 +59,9 @@ class Quiz extends Component {
             )
         } else {
             const currentQuestion = deck.questions ? deck.questions[currentQuestionId].question : ""
-            
+            const currentAnswer = deck.questions ? deck.questions[currentQuestionId].answer : ""
+            const textToShow = showAnswer ? currentAnswer : currentQuestion
+            const textToButton = showAnswer ? "Question" : "Answer"
             return (
                 <View>
                     <View style={styles.currentQuestionCounter}>
@@ -64,7 +69,12 @@ class Quiz extends Component {
                     </View>
                     <View style={styles.item} >
                         <View style={styles.textView} >
-                            <Text style={styles.text}>{currentQuestion}</Text>
+                            <Text style={styles.text}>{textToShow}</Text>
+                        </View>
+                        <View style={styles.switchView} >
+                            <TouchableHighlight onPress={() => {this.setState({showAnswer: !showAnswer})}}>
+                                <Text style={styles.switchText} >{textToButton}</Text>
+                            </TouchableHighlight>
                         </View>
                         <View style={styles.singleButtonContainer}>
                             <Button 
@@ -99,6 +109,12 @@ const styles = StyleSheet.create({
         padding: 20,
         paddingTop: 100,
         alignItems: 'center',
+    },
+    switchView: {
+        alignItems: 'center'
+    },
+    switchText : {
+        color: 'red'
     },
     textView: {
         paddingTop: 20
