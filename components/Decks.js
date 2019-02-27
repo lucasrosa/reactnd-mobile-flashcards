@@ -1,31 +1,24 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
-import { getDecks } from '../utils/api'
+import { StatusBar, View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
 
 
 class Decks extends Component {
-    static navigationOptions = {header: null};
-    
-    componentDidMount() {
-        //console.log("asd", this.props.screenProps.decks);
-    }
-    cocoBongo = () => {
-        console.log("coco bongo")
-    }
+    static navigationOptions = {header: null}
 
     render() {
         const { decks } = this.props.screenProps
         if (!decks) {
             return <View></View>
         } else {
-            //decksArray = Object.values(decks)
+            
             let decksArray = []
             for (let key in decks) {
                 decksArray.push({key, deck: decks[key]});
             }
-            console.log("dee", decksArray);
+            
             return (
                 <View style={styles.container}>
+                    <StatusBar hidden={true}/>
                     <FlatList
                     data={decksArray}
                     renderItem={({item}) => <TouchableOpacity 

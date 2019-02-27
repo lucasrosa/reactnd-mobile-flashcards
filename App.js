@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createEntry, submitEntry, fetchDeckResults, decks, getDecks, getDeck, saveDeckTitle, addCardToDeck } from './utils/api'
+import { createEntry, submitEntry, fetchDeckResults, decks } from './utils/api'
 import { createMaterialTopTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 import Decks from './components/Decks'
 import Deck from './components/Deck'
@@ -69,11 +69,11 @@ export default class App extends React.Component {
   }
 
   handleAddCard = (deckTitle, question, answer, callback) => {
-    console.log("adding question", deckTitle, question, answer)
+    
     let currentDecks = this.state.decks
     currentDecks[deckTitle].questions.push({question, answer})
     const entry = currentDecks[deckTitle]
-    
+
     submitEntry({key: deckTitle, entry}).then(() => {
         this.setState({ decks: currentDecks })
         callback()
@@ -81,14 +81,11 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+
     createEntry(decks).then(() => {
-      // submitEntry({key: "pokato", entry: "lambato"}).then(() => {
-      //   console.log("loida")
-        fetchDeckResults().then((data) => {
-          this.setState({decks: JSON.parse(data)})
-          //console.log("doida", data)
-        })
-      // })
+      fetchDeckResults().then((data) => {
+        this.setState({decks: JSON.parse(data)})
+      })
     })
   }
   render() {
@@ -100,7 +97,6 @@ export default class App extends React.Component {
           handleAddCard: this.handleAddCard
         }
       }
-      //handleAddDeck={this.handleAddDeck}
     />;
   }
 }

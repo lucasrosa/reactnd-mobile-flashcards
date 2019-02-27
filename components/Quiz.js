@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     switchText : {
-        color: 'red'
+        color: 'red',
+        fontSize: 20
     },
     textView: {
         paddingTop: 20
