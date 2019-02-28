@@ -4,8 +4,10 @@
 
 ## Tests
 * The app was tested in an Android device (Samsung Galaxy S8+)
-## Requirements
 
+## Requirements
+* npm installed
+* A phone or emulator to run the app
 
 ## Installation
 
