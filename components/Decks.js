@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { StatusBar, View, TouchableOpacity, Text, StyleSheet, FlatList } from 'react-native'
+import { StatusBar, View, TouchableOpacity, Text, StyleSheet, FlatList, Alert } from 'react-native'
+import { fetchLastDayStudied, getCurrentDay } from '../utils/api'
 
 
 class Decks extends Component {
@@ -15,6 +16,22 @@ class Decks extends Component {
             for (let key in decks) {
                 decksArray.push({key, deck: decks[key]});
             }
+
+            fetchLastDayStudied().then((data) => {
+                const currentDay = getCurrentDay()
+                const dataJSON = JSON.parse(data)
+
+                if (!dataJSON || !dataJSON.lastDayStudied || dataJSON.lastDayStudied != currentDay) {
+                    Alert.alert(
+                        'Notification',
+                        'You have not studied today. Open a deck and start learning!',
+                        [
+                          {text: 'OK'},
+                        ],
+                        {cancelable: false}
+                    );
+                }
+            })
             
             return (
                 <View style={styles.container}>

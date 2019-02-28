@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
-import { NavigationActions } from 'react-navigation';
-
 
 class NewDeck extends Component {
     state = {

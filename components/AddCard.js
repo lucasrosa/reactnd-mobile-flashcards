@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { View, TextInput, StyleSheet, Button } from 'react-native'
-import { NavigationActions } from 'react-navigation';
-
 
 class AddCard extends Component {
     state = {

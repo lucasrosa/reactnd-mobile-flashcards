@@ -1,9 +1,10 @@
 
 ## Mobile flashcards project
   Mobile flashcards 
+  When the user opens the app or returns to the home screen, if s/he hasn't studied that day it shows a notification.
 
 ## Tests
-* The app was tested in an Android device (Samsung Galaxy S8+)
+* The app was tested in an Android 8.0.0 device (Samsung Galaxy S8+)
 
 ## Requirements
 * npm installed

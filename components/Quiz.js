@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button, TouchableHighlight } from 'react-native'
-import { NavigationActions } from 'react-navigation';
-
+import { setLastDayStudied } from '../utils/api'
 
 class Quiz extends Component {
     state = {
@@ -34,6 +33,7 @@ class Quiz extends Component {
     }
 
     componentDidMount() {
+        setLastDayStudied().then(() => {console.log("last day studied set")})
         const deck = this.props.navigation.getParam('deck', 'Deck')
         this.setState({deck})
     }

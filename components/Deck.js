@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
-import { NavigationActions } from 'react-navigation';
-
 
 class Deck extends Component {
     static navigationOptions = ({ navigation }) => {
